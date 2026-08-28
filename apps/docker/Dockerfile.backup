@@ -1,0 +1,16 @@
+FROM mysql:8.4
+
+RUN microdnf install -y cronie unzip \
+    && curl -fL -o /tmp/rclone.zip https://downloads.rclone.org/rclone-current-linux-amd64.zip \
+    && unzip -q /tmp/rclone.zip -d /tmp/rclone \
+    && find /tmp/rclone -name rclone -type f -exec cp {} /usr/local/bin/rclone \; \
+    && chmod +x /usr/local/bin/rclone \
+    && rm -rf /tmp/rclone /tmp/rclone.zip \
+    && microdnf clean all
+
+COPY apps/docker/backup.sh /usr/local/bin/backup.sh
+COPY apps/docker/entrypoint-backup.sh /usr/local/bin/entrypoint-backup.sh
+RUN chmod +x /usr/local/bin/backup.sh /usr/local/bin/entrypoint-backup.sh \
+    && touch /var/log/backup.log
+
+ENTRYPOINT ["/usr/local/bin/entrypoint-backup.sh"]

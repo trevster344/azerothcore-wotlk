@@ -1,7 +1,6 @@
 #
 # AzerothCore
 #
-
 .cache
 /conf/*
 !/conf/dist
@@ -127,3 +126,7 @@ __pycache__/
 # ==================
 .cache
 compile_commands.json
+web_admin/node_modules/*
+docker-compose.test.yml
+wotlk-test/
+

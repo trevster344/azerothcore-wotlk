@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register &middot; Create Account</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+  <div class="layout">
+    <main class="card">
+      <h1>Create Account</h1>
+      <p class="subtitle">Register for the realm</p>
+
+      <form id="register-form" novalidate>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" maxlength="17" autocomplete="off" spellcheck="false" required>
+        <p class="hint">1&ndash;17 characters: letters, numbers, underscore.</p>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" maxlength="16" autocomplete="new-password" required>
+        <p class="hint">1&ndash;16 characters, no spaces.</p>
+
+        <label for="confirm">Confirm password</label>
+        <input id="confirm" name="confirm" type="password" maxlength="16" autocomplete="new-password" required>
+
+        <button type="submit" id="submit-btn">Create account</button>
+      </form>
+
+      <div id="result" class="result" hidden></div>
+    </main>
+
+    <aside class="card online-panel">
+      <h2>Characters</h2>
+      <p id="char-count" class="online-count">Loading&hellip;</p>
+      <ul id="char-list" class="online-list"></ul>
+    </aside>
+  </div>
+
+  <section class="card addons-panel">
+    <h2>Recommended Addons</h2>
+    <p class="subtitle">Install these for the best experience on the realm.</p>
+    <ul class="addons-list">
+      <li>
+        <a href="https://github.com/Wishmaster117/MultiBot-Chatless" target="_blank" rel="noopener noreferrer">
+          <span class="addon-name">MultiBot Chatless</span>
+          <span class="addon-desc">Control and inspect your playerbots through a clean GUI instead of chat commands.</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/Lichborne-AC/PlayerbotManager" target="_blank" rel="noopener noreferrer">
+          <span class="addon-name">Playerbot Manager</span>
+          <span class="addon-desc">Track gear score, iLvL, gear slots, specs, strategies and raid composition for your bot roster.</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://gitlab.com/Tsoukie/compactraidframe-3.3.5" target="_blank" rel="noopener noreferrer">
+          <span class="addon-name">CompactRaidFrame</span>
+          <span class="addon-desc">Compact, classic-style raid frames for the 3.3.5a client.</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/Zidras/DBM-Warmane" target="_blank" rel="noopener noreferrer">
+          <span class="addon-name">DBM-Warmane</span>
+          <span class="addon-desc">Deadly Boss Mods backport with accurate boss timers for WotLK 3.3.5a.</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="card howto-panel">
+    <h2>How to Play</h2>
+    <p class="subtitle">Follow these steps to get in-game.</p>
+    <ol class="howto-list">
+      <li>
+        <span class="howto-step">Download the game client</span>
+        <p class="howto-desc">Grab the client from
+          <a href="https://unlimited-wow.com/page/connect" target="_blank" rel="noopener noreferrer">unlimited-wow.com/page/connect</a>.
+        </p>
+      </li>
+      <li>
+        <span class="howto-step">Set your realmlist</span>
+        <p class="howto-desc">Open <code>realmlist.wtf</code> in your game folder and set it to the server IP:</p>
+        <pre class="howto-code">set realmlist 26.175.239.74</pre>
+      </li>
+      <li>
+        <span class="howto-step">Launch the game directly</span>
+        <p class="howto-desc">Run <code>Wow.exe</code> instead of the launcher &mdash; the launcher can overwrite <code>realmlist.wtf</code>, which would make you repeat step 2.</p>
+      </li>
+    </ol>
+  </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
