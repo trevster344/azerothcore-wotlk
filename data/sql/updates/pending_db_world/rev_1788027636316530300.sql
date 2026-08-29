@@ -1,0 +1,25 @@
+-- Revert Varimathras (entry 2425) visibility workaround
+--
+-- Background:
+--   mod-individual-progression (modules/mod-individual-progression) restores the
+--   Vanilla-era Undercity pre-Wrathgate state. Its zone_undercity.sql spawns
+--   Varimathras (guid 602425) at the Undercity Royal Quarter (1287.7, 333.6) on the
+--   module's custom phase mask 131072 ("IPPPHASE_II / pre-Wrathgate").
+--
+--   A previous revision OR-ed phase bit 1 into this spawn (phaseMask 131073) as a
+--   workaround for the module's runtime phasing (checkIPPhasing) not being delivered
+--   to players on this server. The module runtime is now re-enabled
+--   (IndividualProgression.Enable = 1), so the phase aura (89511) is granted again:
+--   players who have not completed Battle for the Undercity (Horde 13267 /
+--   Alliance 13377) receive phase mask 131073 and see Varimathras, while
+--   post-Wrathgate players see his post-Wrathgate counterpart (Bragor Bloodfist,
+--   entry 36273) on phase 262144.
+--
+--   Keeping the OR-ed bit 1 would make Varimathras visible to post-Wrathgate players
+--   too, overlapping Bragor Bloodfist at the same spot. Revert to the module's
+--   intended phase (131072) to restore clean Wrathgate phase separation.
+--
+-- Scope:
+--   Only guid 602425 (Varimathras). No other spawns, quests, or configuration are
+--   changed.
+UPDATE `creature` SET `phaseMask` = 131072 WHERE `guid` = 602425;
