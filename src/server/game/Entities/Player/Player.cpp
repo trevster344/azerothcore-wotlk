@@ -2345,6 +2345,17 @@ bool Player::IsInSameGroupWith(Player const* p) const
                          GetGroup()->SameSubGroup(this, p));
 }
 
+bool Player::HasGroupMemberInCombat() const
+{
+    if (Group* group = GetGroup())
+        for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+            if (Player* member = itr->GetSource())
+                if (member != this && member->IsInCombat())
+                    return true;
+
+    return false;
+}
+
 ///- If the player is invited, remove him. If the group if then only 1 person, disband the group.
 void Player::UninviteFromGroup()
 {
