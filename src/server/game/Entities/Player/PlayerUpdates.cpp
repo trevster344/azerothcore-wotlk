@@ -406,7 +406,7 @@ void Player::Update(uint32 p_time)
     if (m_hostileReferenceCheckTimer <= p_time)
     {
         m_hostileReferenceCheckTimer = 15000;
-        if (!GetMap()->IsDungeon())
+        if (!GetMap()->IsDungeon() && !HasGroupMemberInCombat() && !HasStealthAura())
             GetCombatManager().EndCombatBeyondRange(GetVisibilityRange(), true);
     }
     else

@@ -5750,6 +5750,15 @@ SpellCastResult Spell::CheckCast(bool strict, uint32* /*param1*/, uint32* /*para
             if (shapeError != SPELL_CAST_OK)
                 return shapeError;
 
+            if (sWorld->getBoolConfig(CONFIG_PLAYER_DRUID_BLOCK_EAT_DRINK_SHAPESHIFT) &&
+                m_caster->IsPlayer() && m_caster->IsClass(CLASS_DRUID, CLASS_CONTEXT_ABILITY) &&
+                m_caster->HasShapeshiftAura())
+            {
+                SpellSpecificType const spec = m_spellInfo->GetSpellSpecific();
+                if (spec == SPELL_SPECIFIC_FOOD || spec == SPELL_SPECIFIC_DRINK || spec == SPELL_SPECIFIC_FOOD_AND_DRINK)
+                    return SPELL_FAILED_NOT_SHAPESHIFT;
+            }
+
             if (m_spellInfo->HasAttribute(SPELL_ATTR0_ONLY_STEALTHED) && !(m_caster->HasStealthAura()))
                 return SPELL_FAILED_ONLY_STEALTHED;
         }
@@ -5793,6 +5802,11 @@ SpellCastResult Spell::CheckCast(bool strict, uint32* /*param1*/, uint32* /*para
         if (reqCombat && m_caster->IsInCombat() && !m_spellInfo->CanBeUsedInCombat())
             return SPELL_FAILED_AFFECTING_COMBAT;
     }
+
+    if (sWorld->getBoolConfig(CONFIG_PLAYER_STEALTH_BLOCK_IN_COMBAT_CAST) && strict &&
+        m_caster->IsPlayer() && m_caster->IsInCombat() &&
+        m_spellInfo->HasAura(SPELL_AURA_MOD_STEALTH) && m_spellInfo->Id != 1856)
+        return SPELL_FAILED_AFFECTING_COMBAT;
 
     // Xinef: exploit protection
     if (reqCombat && !m_spellInfo->CanBeUsedInCombat() && (m_spellInfo->HasEffect(SPELL_EFFECT_RESURRECT) || m_spellInfo->HasEffect(SPELL_EFFECT_RESURRECT_NEW)))
