@@ -700,6 +700,11 @@ void WorldConfig::BuildConfigCache()
     SetConfigValue<bool>(CONFIG_SPELL_QUEUE_ENABLED, "SpellQueue.Enabled", true);
     SetConfigValue<uint32>(CONFIG_SPELL_QUEUE_WINDOW, "SpellQueue.Window", 400);
 
+    // Player combat behavior
+    SetConfigValue<bool>(CONFIG_PLAYER_STEALTH_BREAK_ON_COMBAT, "Player.Stealth.BreakOnCombatEntry", false);
+    SetConfigValue<bool>(CONFIG_PLAYER_STEALTH_BLOCK_IN_COMBAT_CAST, "Player.Stealth.BlockInCombatCast", false);
+    SetConfigValue<bool>(CONFIG_PLAYER_DRUID_BLOCK_EAT_DRINK_SHAPESHIFT, "Player.Druid.BlockEatDrinkInShapeshift", false);
+
     // World State
     SetConfigValue<uint32>(CONFIG_SUNSREACH_COUNTER_MAX, "Sunsreach.CounterMax", 10000);
     SetConfigValue<uint32>(CONFIG_SCOURGEINVASION_COUNTER_FIRST, "ScourgeInvasion.CounterFirst", 50);

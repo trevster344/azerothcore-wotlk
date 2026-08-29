@@ -32,6 +32,7 @@
 #include "ThreatManager.h"
 #include "Unit.h"
 #include "UnitAI.h"
+#include "World.h"
 
 /*static*/ bool CombatManager::CanBeginCombat(Unit const* a, Unit const* b)
 {
@@ -415,6 +416,8 @@ bool CombatManager::UpdateOwnerCombatState() const
     if (combatState)
     {
         _owner->SetUnitFlag(UNIT_FLAG_IN_COMBAT);
+        if (sWorld->getBoolConfig(CONFIG_PLAYER_STEALTH_BREAK_ON_COMBAT))
+            _owner->RemoveAurasByType(SPELL_AURA_MOD_STEALTH);
         _owner->AtEnterCombat();
         if (!_owner->IsCreature())
             _owner->AtEngage(GetAnyTarget());
