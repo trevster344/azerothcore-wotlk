@@ -705,6 +705,9 @@ void WorldConfig::BuildConfigCache()
     SetConfigValue<bool>(CONFIG_PLAYER_STEALTH_BLOCK_IN_COMBAT_CAST, "Player.Stealth.BlockInCombatCast", false);
     SetConfigValue<bool>(CONFIG_PLAYER_DRUID_BLOCK_EAT_DRINK_SHAPESHIFT, "Player.Druid.BlockEatDrinkInShapeshift", false);
 
+    // Pet out-of-combat health regeneration (original WotLK formula)
+    SetConfigValue<bool>(CONFIG_PET_OUT_OF_COMBAT_HEALTH_REGEN, "Pet.OutOfCombatHealthRegen", false);
+
     // World State
     SetConfigValue<uint32>(CONFIG_SUNSREACH_COUNTER_MAX, "Sunsreach.CounterMax", 10000);
     SetConfigValue<uint32>(CONFIG_SCOURGEINVASION_COUNTER_FIRST, "ScourgeInvasion.CounterFirst", 50);
