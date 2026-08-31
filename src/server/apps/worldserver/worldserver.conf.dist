@@ -2280,6 +2280,17 @@ SpellQueue.Enabled = 1
 SpellQueue.Window = 400
 
 #
+#    Pet.OutOfCombatHealthRegen
+#        Description: Use the original WotLK out-of-combat health regen formulas for pets
+#                     (warlock spirit-based, hunter/DK % max HP per 5s) instead of the
+#                     generic spirit formula.
+#        Default:     0 - (Disabled - generic spirit formula)
+#                     1 - (Enabled - original WotLK formula)
+#        Note:        Reloadable at runtime with `.reload config` (no server restart required).
+#
+Pet.OutOfCombatHealthRegen = 0
+
+#
 ###################################################################################################
 
 ###################################################################################################
