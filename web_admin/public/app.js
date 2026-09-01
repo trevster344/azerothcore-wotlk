@@ -5,6 +5,9 @@ const result = document.getElementById('result');
 const submitBtn = document.getElementById('submit-btn');
 const charCount = document.getElementById('char-count');
 const charList = document.getElementById('char-list');
+const showOffline = document.getElementById('show-offline');
+
+let lastCharacters = null;
 
 const CLASS_COLORS = {
   1: '#C79C6E',
@@ -75,52 +78,62 @@ function showResult(success, message) {
   result.textContent = message;
 }
 
+function renderCharacters(allCharacters) {
+  const characters = showOffline.checked
+    ? allCharacters
+    : allCharacters.filter((character) => character.online);
+  charCount.textContent = characters.length === 1
+    ? '1 character'
+    : characters.length + ' characters';
+  charList.innerHTML = '';
+  if (characters.length === 0) {
+    const li = document.createElement('li');
+    li.className = 'empty';
+    li.textContent = allCharacters.length === 0
+      ? 'No characters yet.'
+      : 'No characters online.';
+    charList.appendChild(li);
+    return;
+  }
+  for (const character of characters) {
+    const li = document.createElement('li');
+    li.className = 'character';
+
+    const icons = document.createElement('span');
+    icons.className = 'character-icons';
+    icons.insertAdjacentHTML('beforeend', factionIcon(character.faction));
+    icons.insertAdjacentHTML('beforeend', classIcon(character.classId));
+
+    const info = document.createElement('span');
+    info.className = 'character-info';
+    const name = document.createElement('span');
+    name.className = 'character-name';
+    name.textContent = character.name;
+    name.style.color = CLASS_COLORS[character.classId] || '#e8eaed';
+    const online = document.createElement('span');
+    online.className = 'online-badge' + (character.online ? ' is-online' : '');
+    online.textContent = character.online ? 'Online' : 'Offline';
+    info.appendChild(name);
+    info.appendChild(online);
+
+    const meta = document.createElement('span');
+    meta.className = 'character-meta';
+    meta.textContent = 'Lv ' + character.level + ' ' + character.className;
+
+    li.appendChild(icons);
+    li.appendChild(info);
+    li.appendChild(meta);
+    charList.appendChild(li);
+  }
+}
+
 async function loadCharacters() {
   try {
     const res = await fetch('/api/characters');
     if (!res.ok) throw new Error('bad status');
     const data = await res.json();
-    charCount.textContent = data.count === 1
-      ? '1 character'
-      : data.count + ' characters';
-    charList.innerHTML = '';
-    if (data.count === 0) {
-      const li = document.createElement('li');
-      li.className = 'empty';
-      li.textContent = 'No characters yet.';
-      charList.appendChild(li);
-      return;
-    }
-    for (const character of data.characters) {
-      const li = document.createElement('li');
-      li.className = 'character';
-
-      const icons = document.createElement('span');
-      icons.className = 'character-icons';
-      icons.insertAdjacentHTML('beforeend', factionIcon(character.faction));
-      icons.insertAdjacentHTML('beforeend', classIcon(character.classId));
-
-      const info = document.createElement('span');
-      info.className = 'character-info';
-      const name = document.createElement('span');
-      name.className = 'character-name';
-      name.textContent = character.name;
-      name.style.color = CLASS_COLORS[character.classId] || '#e8eaed';
-      const online = document.createElement('span');
-      online.className = 'online-badge' + (character.online ? ' is-online' : '');
-      online.textContent = character.online ? 'Online' : 'Offline';
-      info.appendChild(name);
-      info.appendChild(online);
-
-      const meta = document.createElement('span');
-      meta.className = 'character-meta';
-      meta.textContent = 'Lv ' + character.level + ' ' + character.className;
-
-      li.appendChild(icons);
-      li.appendChild(info);
-      li.appendChild(meta);
-      charList.appendChild(li);
-    }
+    lastCharacters = data.characters;
+    renderCharacters(lastCharacters);
   } catch (err) {
     charCount.textContent = 'Unable to load characters.';
     charList.innerHTML = '';
@@ -165,3 +178,7 @@ form.addEventListener('submit', async (event) => {
 
 loadCharacters();
 setInterval(loadCharacters, 15000);
+
+showOffline.addEventListener('change', () => {
+  if (lastCharacters) renderCharacters(lastCharacters);
+});
