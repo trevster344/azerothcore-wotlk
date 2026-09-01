@@ -2347,8 +2347,8 @@ bool Player::IsInSameGroupWith(Player const* p) const
 
 bool Player::HasGroupMemberInCombat() const
 {
-    if (Group* group = GetGroup())
-        for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+    if (Group const* group = GetGroup())
+        for (GroupReference const* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
             if (Player* member = itr->GetSource())
                 if (member != this && member->IsInCombat())
                     return true;
