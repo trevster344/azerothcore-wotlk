@@ -152,6 +152,25 @@ button:disabled {
   color: var(--muted);
 }
 
+.online-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.online-toggle input {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  accent-color: var(--accent);
+}
+
 .online-list {
   list-style: none;
   margin: 0;
