@@ -51,6 +51,7 @@ ARG CSCRIPTS="static"
 ARG CMODULES="static"
 ARG CSCRIPTS_DEFAULT_LINKAGE="static"
 ARG CWITH_WARNINGS="ON"
+ARG CJOBS="1"
 ARG CMAKE_EXTRA_OPTIONS=""
 ARG GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
@@ -102,7 +103,7 @@ RUN --mount=type=cache,target=/ccache,sharing=locked \
        -DCMAKE_CXX_COMPILER_LAUNCHER="ccache"          \
        -DCMAKE_C_COMPILER_LAUNCHER="ccache"            \
        -DBoost_USE_STATIC_LIBS="ON"                    \
-    && cmake --build . --config "$CTYPE" -j $(($(nproc) + 1)) \
+    && cmake --build . --config "$CTYPE" -j "${CJOBS}" \
     && cmake --install . --config "$CTYPE"
 
 #############################
