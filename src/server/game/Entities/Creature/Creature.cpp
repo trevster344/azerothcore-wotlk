@@ -1056,10 +1056,34 @@ void Creature::RegenerateHealth()
         float HealthIncreaseRate = sWorld->getRate(RATE_HEALTH);
         float Spirit = GetStat(STAT_SPIRIT);
 
+        // Legacy spirit-based regen (per 2s tick)
         if (GetPower(POWER_MANA) > 0)
             addvalue = uint32(Spirit * 0.25 * HealthIncreaseRate);
         else
             addvalue = uint32(Spirit * 0.80 * HealthIncreaseRate);
+
+        // Original WotLK out-of-combat regen formulas (HP/sec -> per 2s tick)
+        if (sWorld->getBoolConfig(CONFIG_PET_OUT_OF_COMBAT_HEALTH_REGEN))
+        {
+            if (Player* owner = GetOwner() ? GetOwner()->ToPlayer() : nullptr)
+            {
+                switch (owner->GetClass())
+                {
+                    case CLASS_WARLOCK:
+                        addvalue = uint32((6.5f + (GetCreatureTemplate()->family == CREATURE_FAMILY_IMP ? 0.10f : 0.25f) * Spirit) * HealthIncreaseRate * CREATURE_REGEN_INTERVAL / 1000);
+                        break;
+                    case CLASS_HUNTER:
+                        addvalue = uint32((GetMaxHealth() * 0.02f) / 5.0f * HealthIncreaseRate * CREATURE_REGEN_INTERVAL / 1000);
+                        break;
+                    case CLASS_DEATH_KNIGHT:
+                        if (GetCreatureTemplate()->family == CREATURE_FAMILY_GHOUL)
+                            addvalue = uint32((GetMaxHealth() * 0.01f) / 5.0f * HealthIncreaseRate * CREATURE_REGEN_INTERVAL / 1000);
+                        break;
+                    default:
+                        break; // keep legacy spirit formula
+                }
+            }
+        }
     }
 
     // Apply modifiers (if any).
