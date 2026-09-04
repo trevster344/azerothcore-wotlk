@@ -1067,7 +1067,7 @@ void Creature::RegenerateHealth()
         {
             if (Player* owner = GetOwner() ? GetOwner()->ToPlayer() : nullptr)
             {
-                switch (owner->GetClass())
+                switch (owner->getClass())
                 {
                     case CLASS_WARLOCK:
                         addvalue = uint32((6.5f + (GetCreatureTemplate()->family == CREATURE_FAMILY_IMP ? 0.10f : 0.25f) * Spirit) * HealthIncreaseRate * CREATURE_REGEN_INTERVAL / 1000);
