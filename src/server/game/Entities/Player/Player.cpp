@@ -7922,7 +7922,8 @@ void Player::SendQuestGiverStatusMultiple()
         {
             // need also pet quests case support
             Creature* questgiver = worldObject->ToCreature();
-            if (!questgiver || questgiver->IsHostileTo(this))
+            // Match GetNPCIfCanInteractWith: no marker on NPCs the player cannot interact with.
+            if (!questgiver || questgiver->GetReactionTo(this) <= REP_UNFRIENDLY)
                 return;
             if (!questgiver->HasNpcFlag(UNIT_NPC_FLAG_QUESTGIVER))
                 return;

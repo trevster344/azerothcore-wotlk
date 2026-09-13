@@ -52,7 +52,8 @@ void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket& recvData)
         case TYPEID_UNIT:
         {
             LOG_DEBUG("network", "WORLD: Received CMSG_QUESTGIVER_STATUS_QUERY for npc {}", guid.ToString());
-            if (!questGiver->ToCreature()->IsHostileTo(_player)) // do not show quest status to enemies
+            // Match GetNPCIfCanInteractWith: no marker on NPCs the player cannot interact with.
+            if (questGiver->ToCreature()->GetReactionTo(_player) > REP_UNFRIENDLY)
                 questStatus = _player->GetQuestDialogStatus(questGiver);
             break;
         }
