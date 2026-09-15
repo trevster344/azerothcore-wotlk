@@ -2623,6 +2623,8 @@ public:
     [[nodiscard]] bool CanEnterWater() const override { return true; }
     bool IsFreeFlying() const { return HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || HasAuraType(SPELL_AURA_FLY); }
     [[nodiscard]] bool HasGroupMemberInCombat() const;
+    [[nodiscard]] uint32 GetLastDirectDamageTime() const { return m_lastDirectDamageTime; }
+    void SetLastDirectDamageTime(uint32 time) { m_lastDirectDamageTime = time; }
 
     // saving
     void AdditionalSavingAddMask(uint8 mask);
@@ -3028,6 +3030,8 @@ private:
 
     uint32 m_lastFallTime;
     float  m_lastFallZ;
+
+    uint32 m_lastDirectDamageTime;
 
     int32 m_MirrorTimer[MAX_TIMERS];
     uint8 m_MirrorTimerFlags;

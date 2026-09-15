@@ -704,6 +704,10 @@ void WorldConfig::BuildConfigCache()
     SetConfigValue<bool>(CONFIG_PLAYER_STEALTH_BREAK_ON_COMBAT, "Player.Stealth.BreakOnCombatEntry", false);
     SetConfigValue<bool>(CONFIG_PLAYER_STEALTH_BLOCK_IN_COMBAT_CAST, "Player.Stealth.BlockInCombatCast", false);
     SetConfigValue<bool>(CONFIG_PLAYER_DRUID_BLOCK_EAT_DRINK_SHAPESHIFT, "Player.Druid.BlockEatDrinkInShapeshift", false);
+    SetConfigValue<bool>(CONFIG_PLAYER_STEALTH_ALLOW_SHADOWMELD_IN_COMBAT,
+        "Player.Stealth.AllowShadowmeldInCombat", false);
+    SetConfigValue<uint32>(CONFIG_PLAYER_STEALTH_SHADOWMELD_DIRECT_DAMAGE_WINDOW,
+        "Player.Stealth.ShadowmeldDirectDamageWindow", 3000);
 
     // Pet out-of-combat health regeneration (original WotLK formula)
     SetConfigValue<bool>(CONFIG_PET_OUT_OF_COMBAT_HEALTH_REGEN, "Pet.OutOfCombatHealthRegen", false);

@@ -3888,6 +3888,7 @@ void SpellMgr::LoadSpellInfoCorrections()
     ApplySpellFix({ 58984 }, [](SpellInfo* spellInfo)
     {
         spellInfo->AttributesEx3 |= SPELL_ATTR3_ONLY_ON_PLAYER;
+        spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_DIRECT_DAMAGE;
     });
 
     // Flare activation speed

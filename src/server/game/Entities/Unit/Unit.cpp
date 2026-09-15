@@ -1249,7 +1249,12 @@ uint32 Unit::DealDamage(Unit* attacker, Unit* victim, uint32 damage, CleanDamage
         victim->ModifyHealth(- (int32)damage);
 
         if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
+        {
+            if (Player* player = victim->ToPlayer())
+                player->SetLastDirectDamageTime(GameTime::GetGameTimeMS().count());
+
             victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DIRECT_DAMAGE, spellProto ? spellProto->Id : 0);
+        }
 
         if (!victim->IsPlayer())
         {

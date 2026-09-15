@@ -371,6 +371,8 @@ Player::Player(WorldSession* session): Unit(), m_mover(this), _cinematicMgr(*thi
     m_lastFallTime = 0;
     m_lastFallZ = 0;
 
+    m_lastDirectDamageTime = 0;
+
     m_grantableLevels = 0;
 
     m_ControlledByPlayer = true;
