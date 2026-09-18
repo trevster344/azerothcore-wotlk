@@ -911,6 +911,50 @@ BirthdayTime = 1222964635
 PlayerLimit = 1000
 
 #
+#    Player.Stealth.BreakOnCombatEntry
+#        Description: Remove stealth aura when a player enters combat.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+Player.Stealth.BreakOnCombatEntry = 0
+
+#
+#    Player.Stealth.BlockInCombatCast
+#        Description: Prevent casting stealth-granting spells while in combat.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+Player.Stealth.BlockInCombatCast = 0
+
+#
+#    Player.Stealth.AllowShadowmeldInCombat
+#        Description: Allow Night Elf Shadowmeld to be cast while in combat, as long as the
+#                     player has not taken direct damage within
+#                     Player.Stealth.ShadowmeldDirectDamageWindow. Requires
+#                     Player.Stealth.BlockInCombatCast to be enabled to have any effect.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+Player.Stealth.AllowShadowmeldInCombat = 0
+
+#
+#    Player.Stealth.ShadowmeldDirectDamageWindow
+#        Description: Time window (in milliseconds) after taking direct damage during which
+#                     Shadowmeld cannot be used in combat. Only used when
+#                     Player.Stealth.AllowShadowmeldInCombat is enabled.
+#        Default:     3000 - (3 seconds)
+
+Player.Stealth.ShadowmeldDirectDamageWindow = 3000
+
+#
+#    Player.Druid.BlockEatDrinkInShapeshift
+#        Description: Prevent druids from eating/drinking while shapeshifted.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+Player.Druid.BlockEatDrinkInShapeshift = 0
+
+#
 #    World.RealmAvailability
 #        Description: If enabled, players will enter the realm normally.
 #                     Character creation will still be possible even when realm is disabled.

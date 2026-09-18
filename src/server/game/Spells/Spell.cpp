@@ -5805,8 +5805,22 @@ SpellCastResult Spell::CheckCast(bool strict, uint32* /*param1*/, uint32* /*para
 
     if (sWorld->getBoolConfig(CONFIG_PLAYER_STEALTH_BLOCK_IN_COMBAT_CAST) && strict &&
         m_caster->IsPlayer() && m_caster->IsInCombat() &&
-        m_spellInfo->HasAura(SPELL_AURA_MOD_STEALTH) && m_spellInfo->Id != 1856)
-        return SPELL_FAILED_AFFECTING_COMBAT;
+        m_spellInfo->HasAura(SPELL_AURA_MOD_STEALTH))
+    {
+        bool allowed = (m_spellInfo->Id == 1856); // Vanish
+
+        // Shadowmeld: allow in combat as long as the player hasn't taken direct damage recently
+        if (!allowed && m_spellInfo->Id == 58984 &&
+            sWorld->getBoolConfig(CONFIG_PLAYER_STEALTH_ALLOW_SHADOWMELD_IN_COMBAT))
+        {
+            uint32 const windowMs = sWorld->getIntConfig(CONFIG_PLAYER_STEALTH_SHADOWMELD_DIRECT_DAMAGE_WINDOW);
+            allowed = getMSTimeDiff(m_caster->ToPlayer()->GetLastDirectDamageTime(),
+                                    GameTime::GetGameTimeMS().count()) >= windowMs;
+        }
+
+        if (!allowed)
+            return SPELL_FAILED_AFFECTING_COMBAT;
+    }
 
     // Xinef: exploit protection
     if (reqCombat && !m_spellInfo->CanBeUsedInCombat() && (m_spellInfo->HasEffect(SPELL_EFFECT_RESURRECT) || m_spellInfo->HasEffect(SPELL_EFFECT_RESURRECT_NEW)))
