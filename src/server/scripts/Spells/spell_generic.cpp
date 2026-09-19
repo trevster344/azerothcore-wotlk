@@ -5351,7 +5351,7 @@ class spell_gen_sober_up : public AuraScript
     void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
     {
         Unit* target = GetTarget();
-        if (!target && !target->ToPlayer())
+        if (!target || !target->ToPlayer())
             return;
 
         SpellEffIndex InebriateEffIndex = EFFECT_0;
@@ -5368,7 +5368,8 @@ class spell_gen_sober_up : public AuraScript
             }
 
             uint16 level = aurEff->GetSpellInfo()->Effects[InebriateEffIndex].CalcValue();
-            player->SetDrunkValue(player->GetDrunkValue() - (level > 100 ? 100 : level)); // Some (maybe it's only 29690) spells can have over 100 inebriate points
+            uint8 drunk = player->GetDrunkValue();
+            player->SetDrunkValue(level >= drunk ? 0 : drunk - level);
         }
     }
 
